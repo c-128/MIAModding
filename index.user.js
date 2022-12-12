@@ -2,52 +2,49 @@
 // @name     MIA++
 // @version  1
 // @grant    none
-// @match    https://mathe-im-advent.de/*
 // ==/UserScript==
+if (window.location.host != "www.mathe-im-advent.de") return;
 
-(function () {
-  'use strict';
+let CONFIG = {
+  language: "german",
+  nav: {
+    show_task_today: true,
+  },
+  dark_mode: false
+};
 
-  let CONFIG = {
-    language: "german",
-    nav: {
-      show_task_today: true,
-    },
-    dark_mode: false
-  };
+const LANGUAGE_BUNDLE = {
+  german: {
+    "nav.task_today": "Heutige Aufgabe",
 
-  const LANGUAGE_BUNDLE = {
-    german: {
-      "nav.task_today": "Heutige Aufgabe",
+    "settings.show_task_today": "Zeige Heutige Aufgabe Button",
+    "settings.dark_mode": "Dunkel Modus"
+  },
+  english: {
+    "nav.task_today": "Todays task",
 
-      "settings.show_task_today": "Zeige Heutige Aufgabe Button",
-      "settings.dark_mode": "Dunkel Modus"
-    },
-    english: {
-      "nav.task_today": "Todays task",
-
-      "settings.show_task_today": "Shows todays task button",
-      "settings.dark_mode": "Dark mode"
-    }
-  };
-
-  loadConfig();
-
-  // Navigationsleiste
-  const navbarElement = document.getElementById("MainMenu");
-  if (CONFIG.nav.show_task_today) {
-    navbarElement.innerHTML += `<li><a id="mod-nav-task-today">${t("nav.task_today")}</a></li>`;
-
-    document.getElementById("mod-nav-task-today").onclick = () => {
-      window.location.href = "/de/kalender/7-9/" + new Date().getDate()
-    };
+    "settings.show_task_today": "Shows todays task button",
+    "settings.dark_mode": "Dark mode"
   }
+};
 
-  // Dunkel Modus
-  if (CONFIG.dark_mode) {
-    var style = document.createElement("style");
-    style.type = "text/css";
-    style.innerHTML = `
+loadConfig();
+
+// Navigationsleiste
+const navbarElement = document.getElementById("MainMenu");
+if (CONFIG.nav.show_task_today) {
+  navbarElement.innerHTML += `<li><a id="mod-nav-task-today">${t("nav.task_today")}</a></li>`;
+
+  document.getElementById("mod-nav-task-today").onclick = () => {
+    window.location.href = "/de/kalender/7-9/" + new Date().getDate()
+  };
+}
+
+// Dunkel Modus
+if (CONFIG.dark_mode) {
+  var style = document.createElement("style");
+  style.type = "text/css";
+  style.innerHTML = `
   :root {
     --mod-dark-card: #111;
     --mod-dark-card-shadow: #111;
@@ -97,44 +94,43 @@
   }
   .solutions-selected { background-color: var(--mod-solution-selected) !important; }
   `;
-    document.getElementsByTagName('head')[0].appendChild(style);
-  }
+  document.getElementsByTagName('head')[0].appendChild(style);
+}
 
-  // Einstellungen
-  if (window.location.href.includes("einstellungen")) {
-    document.getElementById("article").innerHTML += `
+// Einstellungen
+if (window.location.href.includes("einstellungen")) {
+  document.getElementById("article").innerHTML += `
   <h1>Mod Einstellungen</h1>
 
   <input type="checkbox" id="mod-settings-show-task-today"><label>${t("settings.show_task_today")}</label/><br/>
 
   <input type="checkbox" id="mod-settings-dark-mode"><label>${t("settings.dark_mode")}</label/>
   `;
-    const showTaskToday = document.getElementById("mod-settings-show-task-today"), darkMode = document.getElementById("mod-settings-dark-mode");
+  const showTaskToday = document.getElementById("mod-settings-show-task-today"), darkMode = document.getElementById("mod-settings-dark-mode");
 
-    showTaskToday.checked = CONFIG.nav.show_task_today;
-    showTaskToday.onchange = (e) => {
-      CONFIG.nav.show_task_today = e.target.checked;
-      saveConfig();
-    };
+  showTaskToday.checked = CONFIG.nav.show_task_today;
+  showTaskToday.onchange = (e) => {
+    CONFIG.nav.show_task_today = e.target.checked;
+    saveConfig();
+  };
 
-    darkMode.checked = CONFIG.dark_mode;
-    darkMode.onchange = (e) => {
-      CONFIG.dark_mode = e.target.checked;
-      saveConfig();
-    };
-  }
+  darkMode.checked = CONFIG.dark_mode;
+  darkMode.onchange = (e) => {
+    CONFIG.dark_mode = e.target.checked;
+    saveConfig();
+  };
+}
 
-  function saveConfig() {
-    localStorage.setItem("mod.config", JSON.stringify(CONFIG));
-  }
+function saveConfig() {
+  localStorage.setItem("mod.config", JSON.stringify(CONFIG));
+}
 
-  function loadConfig() {
-    if (localStorage.getItem("mod.config") != null)
-      CONFIG = Object.assign(CONFIG, JSON.parse(localStorage.getItem("mod.config")));
-  }
+function loadConfig() {
+  if (localStorage.getItem("mod.config") != null)
+    CONFIG = Object.assign(CONFIG, JSON.parse(localStorage.getItem("mod.config")));
+}
 
-  function t(key) {
-    if (LANGUAGE_BUNDLE[CONFIG.language][key]) return LANGUAGE_BUNDLE[CONFIG.language][key];
-    else "missing translation: " + key;
-  }
-})();
+function t(key) {
+  if (LANGUAGE_BUNDLE[CONFIG.language][key]) return LANGUAGE_BUNDLE[CONFIG.language][key];
+  else "missing translation: " + key;
+}
