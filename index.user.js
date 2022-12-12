@@ -2,6 +2,7 @@
 // @name     MIA++
 // @version  1
 // @grant    none
+// @match    *://mathe-im-advent.de/*
 // ==/UserScript==
 let CONFIG = {
   language: "german",
