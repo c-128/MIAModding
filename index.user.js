@@ -19,7 +19,10 @@ const LANGUAGE_BUNDLE = {
     "settings.dark_mode": "Dunkel Modus"
   },
   english: {
+    "nav.task_today": "Todays task",
 
+    "settings.show_task_today": "Shows todays task button",
+    "settings.dark_mode": "Dark mode"
   }
 };
 
@@ -47,12 +50,16 @@ if (CONFIG.dark_mode) {
     --mod-color: #ddd;
     --mod-dark: #000;
 
-    --mod-nav-dropdown: #111;
+    --mod-nav: #111;
 
     --mod-button: #00a3da;
     --mod-button-hover: #0090c1;
     --mod-button-disabled: #777777;
     --mod-button-disabled-hover: #777777;
+
+    --mod-solution-bg: #111;
+    --mod-solution-shadow: #222;
+    --mod-solution-selected: #aac4cf;
   }
 
   /* Card */
@@ -66,7 +73,8 @@ if (CONFIG.dark_mode) {
   #article, #page { background-color: var(--mod-dark) !important; }
 
   /* Navbar */
-  .dropdown-menu * { background-color: var(--mod-nav-dropdown) !important; }
+  #nav * { background-color: var(--mod-nav) !important; }
+  .dropdown-menu * { background-color: var(--mod-nav) !important; }
 
   /* Buttons */
   .button { background-color: var(--mod-button) !important; }
@@ -76,6 +84,13 @@ if (CONFIG.dark_mode) {
   .button-inept:hover { background-color: var(--mod-button-disabled-hover) !important; }
   .button-solve-inactive { background-color: var(--mod-button-disabled) !important; }
   .button-solve-inactive:hover { background-color: var(--mod-button-disabled-hover) !important; }
+
+  /* Solutions */
+  .solution {
+    background-color: var(--mod-solution-bg) !important;
+    box-shadow: inset 1px 1px 3px var(--mod-solution-shadow) !important;
+  }
+  .solutions-selected { background-color: var(--mod-solution-selected) !important; }
   `;
   document.getElementsByTagName('head')[0].appendChild(style);
 }
@@ -88,8 +103,6 @@ if (window.location.href.includes("einstellungen")) {
   <input type="checkbox" id="mod-settings-show-task-today"><label>${t("settings.show_task_today")}</label/><br/>
 
   <input type="checkbox" id="mod-settings-dark-mode"><label>${t("settings.dark_mode")}</label/>
-  
-  
   `;
   const showTaskToday = document.getElementById("mod-settings-show-task-today"), darkMode = document.getElementById("mod-settings-dark-mode");
 
@@ -111,11 +124,11 @@ function saveConfig() {
 }
 
 function loadConfig() {
-  if (localStorage.getItem("mod.config") != null) {
+  if (localStorage.getItem("mod.config") != null)
     CONFIG = Object.assign(CONFIG, JSON.parse(localStorage.getItem("mod.config")));
-  }
 }
 
 function t(key) {
-  return LANGUAGE_BUNDLE[CONFIG.language][key];
+  if (LANGUAGE_BUNDLE[CONFIG.language][key]) return LANGUAGE_BUNDLE[CONFIG.language][key];
+  else "missing translation: " + key;
 }
