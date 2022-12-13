@@ -19,6 +19,7 @@ export default class Config {
   static INSTANCE = new Config();
 
   darkmode = new ConfigValue("darkmode", "Darkmode", "boolean", true);
+  removeSocialMedia = new ConfigValue("remove-social-media", "Verstecke Social Media", "boolean", false);
   showTodaysTask = new ConfigValue("show-todays-task", "Zeige heutige Aufgabe in Navigationsleiste", "boolean", true);
 
   static loadConfig() {
