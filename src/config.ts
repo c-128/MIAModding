@@ -18,7 +18,6 @@ export default class Config {
   static LOCALSTORAGE_KEY = "miapp.config";
   static INSTANCE = new Config();
 
-  darkmode = new ConfigValue("darkmode", "Darkmode", "boolean", true);
   removeInfoMessages = new ConfigValue("remove-info-messages", "Verstecke \"Wichtige Informationen\"", "boolean", false);
   removeSocialMedia = new ConfigValue("remove-social-media", "Verstecke Social Media Werbung", "boolean", false);
   removeTaskHeader = new ConfigValue("remove-task-header", "Verstecke den Aufgabenkopf (Aufgabe bewerten, Als PDF herunterladen,...)", "boolean", false);
@@ -26,23 +25,19 @@ export default class Config {
   showTodaysTask = new ConfigValue("show-todays-task", "Zeige heutige Aufgabe in Navigationsleiste", "boolean", true);
 
   static loadConfig() {
-    if (localStorage.getItem(this.LOCALSTORAGE_KEY) != null) {
-      const json = JSON.parse(localStorage.getItem(this.LOCALSTORAGE_KEY) as string);
-      console.log(json);
-      Object.keys(this.INSTANCE).forEach((key) => {
-        if (this.INSTANCE[key]?.name == null) return;
-        this.INSTANCE[key].value = json[key];
-      });
-    }
+    Object.keys(this.INSTANCE).forEach((key) => {
+      if (this.INSTANCE[key]?.name == null) return;
+      this.INSTANCE[key].value = JSON.parse(localStorage.getItem("miapp.config." + this.INSTANCE[key].key) as string)?.value;
+    });
   }
 
   static saveConfig() {
-    const toSave = {};
     Object.keys(this.INSTANCE).forEach((key) => {
       if (this.INSTANCE[key]?.name == null) return;
-      toSave[key] = this.INSTANCE[key].value;
+      localStorage.setItem("miapp.config." + this.INSTANCE[key].key, JSON.stringify({
+        value: this.INSTANCE[key].value
+      }));
     });
-    localStorage.setItem(this.LOCALSTORAGE_KEY, JSON.stringify(toSave));
   }
 }
 
