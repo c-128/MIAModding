@@ -24,7 +24,6 @@ export default class Config {
   removeTaskHeader = new ConfigValue("remove-task-header", "Verstecke den Aufgabenkopf (Aufgabe bewerten, Als PDF herunterladen,...)", "boolean", false);
   removeTaskSuggester = new ConfigValue("remove-task-suggester", "Verstecke Aufgabe Vorschläger", "boolean", true);
   showTodaysTask = new ConfigValue("show-todays-task", "Zeige heutige Aufgabe in Navigationsleiste", "boolean", true);
-  customCss = new ConfigValue("custom-css", "Eigenes CSS", "text", "");
 
   static loadConfig() {
     if (localStorage.getItem(this.LOCALSTORAGE_KEY) != null) {
