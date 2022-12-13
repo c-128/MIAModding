@@ -2,10 +2,10 @@ export class ConfigValue {
 
   key: string;
   name: string;
-  type: "boolean" | "string";
+  type: "boolean" | "string" | "text";
   value: any;
 
-  constructor(key: string, name: string, type: "boolean" | "string", defaultValue: any) {
+  constructor(key: string, name: string, type: "boolean" | "string" | "text", defaultValue: any) {
     this.key = key;
     this.name = name;
     this.type = type;
@@ -23,6 +23,7 @@ export default class Config {
   removeTaskHeader = new ConfigValue("remove-task-header", "Verstecke den Aufgabenkopf (Aufgabe bewerten, Als PDF herunterladen,...)", "boolean", false);
   removeTaskSuggester = new ConfigValue("remove-task-suggester", "Verstecke Aufgabe Vorschläger", "boolean", true);
   showTodaysTask = new ConfigValue("show-todays-task", "Zeige heutige Aufgabe in Navigationsleiste", "boolean", true);
+  customCss = new ConfigValue("custom-css", "Eigenes CSS", "text", "");
 
   static loadConfig() {
     if (localStorage.getItem(this.LOCALSTORAGE_KEY) != null) {

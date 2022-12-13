@@ -15,3 +15,8 @@ if (Config.INSTANCE.removeSocialMedia.value) RemoveSocialMediaMod();
 if (Config.INSTANCE.removeTaskHeader.value) RemoveTaskHeaderMod();
 if (Config.INSTANCE.removeTaskSuggester.value) RemoveTaskSuggesterMod();
 if (Config.INSTANCE.showTodaysTask.value) ShowTodaysTaskMod();
+
+const style = document.createElement("style");
+style.type = "text/css";
+style.innerHTML = Config.INSTANCE.customCss.value;
+document.getElementsByTagName('head')[0].appendChild(style);

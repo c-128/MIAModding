@@ -1,5 +1,5 @@
 export default function DarkmodeMod() {
-  var style = document.createElement("style");
+  const style = document.createElement("style");
   style.type = "text/css";
   style.innerHTML = `
   :root {
