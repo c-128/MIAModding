@@ -19,6 +19,7 @@ export default class Config {
   static INSTANCE = new Config();
 
   darkmode = new ConfigValue("darkmode", "Darkmode", "boolean", true);
+  removeInfoMessages = new ConfigValue("remove-info-messages", "Verstecke \"Wichtige Informationen\"", "boolean", false);
   removeSocialMedia = new ConfigValue("remove-social-media", "Verstecke Social Media Werbung", "boolean", false);
   removeTaskHeader = new ConfigValue("remove-task-header", "Verstecke den Aufgabenkopf (Aufgabe bewerten, Als PDF herunterladen,...)", "boolean", false);
   removeTaskSuggester = new ConfigValue("remove-task-suggester", "Verstecke Aufgabe Vorschläger", "boolean", true);

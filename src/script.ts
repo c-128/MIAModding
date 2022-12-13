@@ -1,5 +1,6 @@
 import Config from "./config";
 import DarkmodeMod from "./mods/darkmodeMod";
+import RemoveInfoMessagesMod from "./mods/removeInfoMessages";
 import RemoveSocialMediaMod from "./mods/removeSocialMediaMod";
 import RemoveTaskHeaderMod from "./mods/removeTaskHeaderMod";
 import RemoveTaskSuggesterMod from "./mods/removeTaskSuggesterMod";
@@ -11,6 +12,7 @@ Config.loadConfig();
 if (window.location.href.includes("einstellungen")) SettingsMod();
 
 if (Config.INSTANCE.darkmode.value) DarkmodeMod();
+if (Config.INSTANCE.removeInfoMessages.value) RemoveInfoMessagesMod();
 if (Config.INSTANCE.removeSocialMedia.value) RemoveSocialMediaMod();
 if (Config.INSTANCE.removeTaskHeader.value) RemoveTaskHeaderMod();
 if (Config.INSTANCE.removeTaskSuggester.value) RemoveTaskSuggesterMod();
