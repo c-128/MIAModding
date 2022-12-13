@@ -19,7 +19,8 @@ export default class Config {
   static INSTANCE = new Config();
 
   darkmode = new ConfigValue("darkmode", "Darkmode", "boolean", true);
-  removeSocialMedia = new ConfigValue("remove-social-media", "Verstecke Social Media", "boolean", false);
+  removeSocialMedia = new ConfigValue("remove-social-media", "Verstecke Social Media Werbung", "boolean", false);
+  removeTaskHeader = new ConfigValue("remove-task-header", "Verstecke den Aufgabenkopf (Aufgabe bewerten, Als PDF herunterladen,...)", "boolean", false);
   showTodaysTask = new ConfigValue("show-todays-task", "Zeige heutige Aufgabe in Navigationsleiste", "boolean", true);
 
   static loadConfig() {
